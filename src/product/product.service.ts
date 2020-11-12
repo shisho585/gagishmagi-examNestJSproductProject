@@ -14,17 +14,17 @@ export class ProductService {
     public async createProduct(
         createProductDto: CreateProductDTO,
     ): Promise<Product> {
-        return await null //create product
+        return await this.productRepository.createProduct(createProductDto);
     }
 
 
     public async getProducts(): Promise<Product[]> {
-        return await null ;// find all
+        return await this.productRepository.find();
     }
 
 
     public async getProduct(productId: number): Promise<Product> {
-        const foundProduct = null; //findOne
+        const foundProduct = await this.productRepository.findOne(productId)
         if (!foundProduct) {
             throw new NotFoundException('Product not found');
         }
@@ -37,15 +37,15 @@ export class ProductService {
         createProductDto: CreateProductDTO,
     ): Promise<Product> {
         //find One and Edit
-        const editedProduct = null; //find One
+        const editedProduct = await this.productRepository.findOne({ id: productId })
         if (!editedProduct) {
             throw new NotFoundException('Product not found');
         }
-        return null ; // Edit Product
+        return this.productRepository.editProduct(createProductDto, editedProduct)
     }
 
 
     public async deleteProduct(productId: number): Promise<void> {
-        await null // delete product
+        await this.productRepository.delete(productId);
     }
 }
